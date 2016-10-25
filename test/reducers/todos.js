@@ -48,3 +48,42 @@ test(
         t.deepEqual(stateAfter, todos(stateBefore, action));
     }
 );
+
+test(
+    'toggles the completed flag on a todo when action type is TOGGLE_TODO',
+    t => {
+        const stateBefore = [
+            {
+                id: 0,
+                text: 'Learn Redux',
+                completed: false
+            },
+            {
+                id: 1,
+                text: 'Go Shopping',
+                completed: false
+            }
+        ];
+        const action = {
+            type: 'TOGGLE_TODO',
+            id: 1
+        };
+        const stateAfter = [
+            {
+                id: 0,
+                text: 'Learn Redux',
+                completed: false
+            },
+            {
+                id: 1,
+                text: 'Go Shopping',
+                completed: true
+            }
+        ];
+
+        deepFreeze(stateBefore);
+        deepFreeze(action);
+
+        t.deepEqual(stateAfter, todos(stateBefore, action));
+    }
+);
