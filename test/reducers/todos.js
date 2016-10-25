@@ -6,7 +6,11 @@ import todos from 'reducers/todos';
 test(
     'returns an empty array for an undefined state and unrecognized action',
     t => {
-        t.deepEqual([], todos(undefined, {type: 'FOO_BAR'}));
+        const action = {type: 'FOO_BAR'};
+
+        deepFreeze(action);
+
+        t.deepEqual([], todos(undefined, action));
     }
 );
 
@@ -14,7 +18,12 @@ test(
     'returns state unaltered for an unrecognized action',
     t => {
         const state = ['foo', 'bar'];
-        t.is(state, todos(state, {type: 'FOO_BAR'}));
+        const action = {type: 'FOO_BAR'};
+
+        deepFreeze(state);
+        deepFreeze(action);
+
+        t.is(state, todos(state, action));
     }
 );
 
@@ -32,6 +41,10 @@ test(
             text: 'Learn Redux',
             completed: false
         }];
+
+        deepFreeze(stateBefore);
+        deepFreeze(action);
+
         t.deepEqual(stateAfter, todos(stateBefore, action));
     }
 );
