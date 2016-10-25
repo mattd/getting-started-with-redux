@@ -1,3 +1,4 @@
+
 {
   "name": "redux-playground",
   "version": "1.0.0",
@@ -10,6 +11,7 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
+    "ava": "^0.16.0",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.16.0",
     "babel-eslint": "^7.0.0",
@@ -22,6 +24,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "6.16.0",
     "css-loader": "^0.25.0",
+    "deep-freeze": "^0.0.1",
     "eslint": "^3.8.1",
     "eslint-plugin-react": "^6.4.1",
     "express": "^4.14.0",
@@ -31,17 +34,30 @@
     "react-transform-hmr": "^1.0.4",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^1.16.2",
-    "webpack-hot-middleware": "^2.13.0",
-    "webpack": "^1.13.2"
+    "webpack-hot-middleware": "^2.13.0"
   },
   "scripts": {
     "build:webpack": "NODE_ENV=production webpack --config webpack.prod.js",
     "build": "npm run clean && npm run build:webpack",
     "clean": "rm -rf ./src/static",
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_PATH=src/js ava",
+    "test:watch": "npm test -- --watch"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js"
+    ],
+    "source": [
+      "src/js/**/*.{js,jsx}"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   },
   "author": "Matt Dawson",
   "license": "ISC"
