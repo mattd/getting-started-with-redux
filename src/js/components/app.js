@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import store from '../store';
 
-let nextTodoId = 0;
-
 class App extends React.Component {
     render() {
         return (
