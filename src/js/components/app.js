@@ -2,6 +2,9 @@ import * as React from 'react';
 
 import store from '../store';
 
+// TODO: Demolish this global variable.
+let nextTodoId = 0;
+
 class App extends React.Component {
     render() {
         return (
