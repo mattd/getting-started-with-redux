@@ -1,44 +1,17 @@
 require('../scss/style.scss');
 
-import { createStore } from 'redux';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
 
-import app from './app';
+import store from './store';
+import App from './components/app';
 
-const store = createStore(app);
+const render = () => {
+    ReactDOM.render(
+        <App todos={store.getState().todos} />,
+        document.getElementById('root')
+    );
+};
 
-console.log('Initial state:', store.getState());
-console.log('----------');
-
-console.log('Dispatching ADD_TODO.');
-store.dispatch({
-    type: 'ADD_TODO',
-    id: 0,
-    text: 'Learn Redux'
-});
-console.log('Current state:', store.getState());
-console.log('----------');
-
-console.log('Dispatching ADD_TODO again.');
-store.dispatch({
-    type: 'ADD_TODO',
-    id: 1,
-    text: 'Keep Going'
-});
-console.log('Current state:', store.getState());
-console.log('----------');
-
-console.log('Dispatching TOGGLE_TODO.');
-store.dispatch({
-    type: 'TOGGLE_TODO',
-    id: 0
-});
-console.log('Current state:', store.getState());
-console.log('----------');
-
-console.log('Dispatching SET_VISIBILITY_FILTER.');
-store.dispatch({
-    type: 'SET_VISIBILITY_FILTER',
-    filter: 'SHOW_COMPLETED'
-});
-console.log('Current state:', store.getState());
-console.log('----------');
+store.subscribe(render);
+render();
