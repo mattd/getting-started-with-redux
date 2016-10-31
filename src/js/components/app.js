@@ -1,12 +1,28 @@
-import * as React from 'react';
+import React from 'react';
 
 import store from '../store';
+import FilterLink from './filter-link';
 
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
 
+// TODO: Find a better place for this function.
+const getVisibileTodos = (todos, filter) => {
+    switch (filter) {
+        case 'SHOW_ALL':
+            return todos;
+        case 'SHOW_COMPLETED':
+            return todos.filter(t => t.completed);
+        case 'SHOW_ACTIVE':
+            return todos.filter(t => !t.completed);
+    }
+};
+
 class App extends React.Component {
     render() {
+        const { todos, visibilityFilter } = this.props;
+        const visibleTodos = getVisibileTodos(todos, visibilityFilter);
+
         return (
             <div>
                 <input ref={node => {
@@ -23,7 +39,7 @@ class App extends React.Component {
                     Add Todo
                 </button>
                 <ul>
-                    {this.props.todos.map(todo =>
+                    {visibleTodos.map(todo =>
                         <li key={todo.id}
                             onClick={() => {
                                 store.dispatch({
@@ -41,6 +57,30 @@ class App extends React.Component {
                         </li>
                     )}
                 </ul>
+                <p>
+                    Show:
+                    {' '}
+                    <FilterLink
+                        filter='SHOW_ALL'
+                        currentFilter={visibilityFilter}
+                    >
+                        All
+                    </FilterLink>
+                    {' '}
+                    <FilterLink
+                        filter='SHOW_ACTIVE'
+                        currentFilter={visibilityFilter}
+                    >
+                        Active
+                    </FilterLink>
+                    {' '}
+                    <FilterLink
+                        filter='SHOW_COMPLETED'
+                        currentFilter={visibilityFilter}
+                    >
+                        Completed
+                    </FilterLink>
+                </p>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 require('../scss/style.scss');
 
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 import store from './store';
@@ -8,7 +8,7 @@ import App from './components/app';
 
 const render = () => {
     ReactDOM.render(
-        <App todos={store.getState().todos} />,
+        <App {...store.getState()} />,
         document.getElementById('root')
     );
 };
