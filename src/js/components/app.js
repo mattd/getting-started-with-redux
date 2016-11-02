@@ -1,6 +1,7 @@
 import React from 'react';
 
 import store from '../store';
+import TodoList from './todo-list';
 import FilterLink from './filter-link';
 
 // TODO: Demolish this global variable.
@@ -38,25 +39,15 @@ class App extends React.Component {
                 }}>
                     Add Todo
                 </button>
-                <ul>
-                    {visibleTodos.map(todo =>
-                        <li key={todo.id}
-                            onClick={() => {
-                                store.dispatch({
-                                    type: 'TOGGLE_TODO',
-                                    id: todo.id
-                                });
-                            }}
-                            style={{
-                                textDecoration:
-                                    todo.completed ?
-                                    'line-through' :
-                                    'none'
-                            }}>
-                            {todo.text}
-                        </li>
-                    )}
-                </ul>
+                <TodoList
+                    todos={visibleTodos}
+                    onTodoClick={id =>
+                        store.dispatch({
+                            type: 'TOGGLE_TODO',
+                            id
+                        })
+                    }
+                />
                 <p>
                     Show:
                     {' '}
