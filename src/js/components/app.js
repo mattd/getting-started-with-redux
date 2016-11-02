@@ -1,8 +1,9 @@
 import React from 'react';
 
 import store from '../store';
+import AddTodo from './add-todo';
 import TodoList from './todo-list';
-import FilterLink from './filter-link';
+import Footer from './footer';
 
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
@@ -19,62 +20,44 @@ const getVisibileTodos = (todos, filter) => {
     }
 };
 
-class App extends React.Component {
-    render() {
-        const { todos, visibilityFilter } = this.props;
-        const visibleTodos = getVisibileTodos(todos, visibilityFilter);
-
-        return (
-            <div>
-                <input ref={node => {
-                    this.input = node;
-                }} />
-                <button onClick={() => {
-                    store.dispatch({
-                        type: 'ADD_TODO',
-                        text: this.input.value,
-                        id: nextTodoId++
-                    });
-                    this.input.value = '';
-                }}>
-                    Add Todo
-                </button>
-                <TodoList
-                    todos={visibleTodos}
-                    onTodoClick={id =>
-                        store.dispatch({
-                            type: 'TOGGLE_TODO',
-                            id
-                        })
-                    }
-                />
-                <p>
-                    Show:
-                    {' '}
-                    <FilterLink
-                        filter='SHOW_ALL'
-                        currentFilter={visibilityFilter}
-                    >
-                        All
-                    </FilterLink>
-                    {' '}
-                    <FilterLink
-                        filter='SHOW_ACTIVE'
-                        currentFilter={visibilityFilter}
-                    >
-                        Active
-                    </FilterLink>
-                    {' '}
-                    <FilterLink
-                        filter='SHOW_COMPLETED'
-                        currentFilter={visibilityFilter}
-                    >
-                        Completed
-                    </FilterLink>
-                </p>
-            </div>
-        );
-    }
-}
+const App = ({
+    todos,
+    visibilityFilter
+}) => (
+    <div>
+        <AddTodo
+            onAddClick={text =>
+                store.dispatch({
+                    type: 'ADD_TODO',
+                    id: nextTodoId++,
+                    text
+                })
+            }
+        />
+        <TodoList
+            todos={
+                getVisibileTodos(
+                    todos,
+                    visibilityFilter
+                )
+            }
+            onTodoClick={id =>
+                store.dispatch({
+                    type: 'TOGGLE_TODO',
+                    id
+                })
+            }
+        />
+        <Footer
+            visibilityFilter={visibilityFilter}
+            onFilterClick={filter =>
+                store.dispatch({
+                    type: 'SET_VISIBILITY_FILTER',
+                    filter
+                })
+            }
+        />
+    </div>
+);
 
 export default App;
