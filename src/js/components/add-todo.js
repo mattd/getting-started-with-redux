@@ -3,9 +3,7 @@ import React from 'react';
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
 
-const AddTodo = ({
-    store
-}) => {
+const AddTodo = (props, { store }) => {
     let input;
 
     return (
@@ -25,6 +23,9 @@ const AddTodo = ({
             </button>
         </div>
     );
+};
+AddTodo.contextTypes = {
+    store: React.PropTypes.object
 };
 
 export default AddTodo;
