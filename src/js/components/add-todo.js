@@ -1,11 +1,11 @@
 import React from 'react';
 
-import store from '../store';
-
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
 
-const AddTodo = () => {
+const AddTodo = ({
+    store
+}) => {
     let input;
 
     return (

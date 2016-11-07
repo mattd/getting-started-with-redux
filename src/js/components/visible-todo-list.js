@@ -1,6 +1,5 @@
 import React from 'react';
 
-import store from '../store';
 import TodoList from './todo-list';
 
 const getVisibileTodos = (todos, filter) => {
@@ -16,6 +15,7 @@ const getVisibileTodos = (todos, filter) => {
 
 class VisibleTodoList extends React.Component {
     componentDidMount() {
+        const { store } = this.props;
         this.unsubscribe = store.subscribe(() => this.forceUpdate());
     }
 
@@ -25,6 +25,7 @@ class VisibleTodoList extends React.Component {
 
     render() {
         const props = this.props;
+        const { store } = props;
         const state = store.getState();
 
         return (
