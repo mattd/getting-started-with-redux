@@ -3,7 +3,7 @@ import React from 'react';
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
 
-const AddTodo = (props, { store }) => {
+const AddTodo = ({ dispatch }) => {
     let input;
 
     return (
@@ -12,7 +12,7 @@ const AddTodo = (props, { store }) => {
                 input = node;
             }} />
             <button onClick={() => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TODO',
                     id: nextTodoId++,
                     text: input.value
@@ -24,8 +24,6 @@ const AddTodo = (props, { store }) => {
         </div>
     );
 };
-AddTodo.contextTypes = {
-    store: React.PropTypes.object
-};
 
-export default AddTodo;
+
+export default connect()(AddTodo);
