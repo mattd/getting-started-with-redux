@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
