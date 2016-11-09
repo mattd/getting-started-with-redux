@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { addTodo } from '../action-creators/todos';
+
 // TODO: Demolish this global variable.
 let nextTodoId = 0;
 
@@ -13,11 +15,7 @@ const AddTodo = ({ dispatch }) => {
                 input = node;
             }} />
             <button onClick={() => {
-                dispatch({
-                    type: 'ADD_TODO',
-                    id: nextTodoId++,
-                    text: input.value
-                });
+                dispatch(addTodo(input.value));
                 input.value = '';
             }}>
                 Add Todo
