@@ -1,4 +1,4 @@
-# redux-playground
+# getting-started-with-redux
 
 ## install
 
